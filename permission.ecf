@@ -12,6 +12,7 @@
 		<library name="pub_sub" location="$GITHUB\pub_sub\pub_sub.ecf"/>
 		<library name="randomizer" location="$GITHUB\randomizer\randomizer.ecf"/>
 		<library name="thread" location="$ISE_LIBRARY\library\thread\thread-safe.ecf"/>
+		<library name="time" location="$ISE_LIBRARY\library\time\time-safe.ecf"/>
 		<library name="uuid" location="$ISE_LIBRARY\library\uuid\uuid-safe.ecf"/>
 		<cluster name="permission" location=".\" recursive="true">
 			<file_rule>

@@ -92,6 +92,23 @@
 		Answer:		The greater of P1 and P2 is applied.
 		
 		RULE:		When C1 = C2 for a given E1 with 1:P, the highest P wins (is applied).
+		
+		Components & Component Sets
+		===========================
+		Both individual UX Components and collections (sets) of UX Components must have a UUID.
+		
+		RULE: A UX Component Set has a UUID and each constituent element must have a UUID.
+				Moreover, all UUID's from the root set down must have UUIDs that are unique
+				in the entire set universe.
+				
+		Guaranteeing unique UUID's within a project universe will require a "scanner" test of
+		code within a project (ECF) to ensure all instances of UUID applied to "permissioned"
+		classes holds. While contracts can help by a guarantee for the component-mix at run-time, 
+		they cannot make an overall guarantee at the ECF or library level. This requires a scanner.
+		
+		Therefore, each UIX component that cares about Entity Permission(s) will need to have
+		some form of standard feature denoting its Component UUID.
+
 		]"
 	define: "UIX (or UX)", "[
 				User Interface Experience or just User Experience.
@@ -104,10 +121,33 @@
 					A ⊄ B	Not a Subset: A is not a subset of B			{1,6} ⊄ C
 					A ⊇ B	Superset: A has same elements as B, or more		{1,2,3} ⊇ {1,2,3}
 					]"
-class
+deferred class
 	EP_ANY
 
 feature -- Access
+
+	uuid: STRING
+			-- `uuid' of Current {EP_ANY}.
+		note
+			todo: "[
+				Set as constant in descendents using a UUID string which can be generated
+				on-demand from the EIS link source below. If the EIS URL is not available
+				please find {UUID_GENERATOR_TEST_SET}.generate_uuid feature to generate a
+				new UUID on-demand to a file.
+				]"
+			EIS: "src=https://www.uuidgenerator.net/"
+		deferred
+		end
+
+	permission: INTEGER
+			-- `permission' of Current {EP_ANY}
+		note
+			design: "[
+				Presumes No-Access (level = 0) unless otherwise set.
+				]"
+		attribute
+			Result := 0
+		end
 
 	level: HASH_TABLE [STRING, INTEGER]
 			-- `level' of Current {EP_ANY}.
