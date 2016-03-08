@@ -43,17 +43,31 @@
 		
 		Organization
 		============
-		Hypothesis: Entity has Permission on UIX Component or vectors: E x P x C
+		Hypothesis: Entity has Permission on UIX Component as vectors: E x P x C
+
+		BNF
+		===
+			Permission_vector (1) ::=
+				Entity (2)
+				Permission_set (3)
+				Component_set (4)
+			
+			Permission_set ::= {Permission}*
+			
+			Component_set ::= {Component}*
 		
-		E -> Always a single entity making access
+			Informative Text
+			-----------------
+			(1) External API has a Permission_vector consisting of E x P' x C'
+			(2) Entity or E
+			(3) Permission_set or P' consisting of 0:1:M P vectors
+			(4) Component_set or C' consisting of 0:1:M C vectors
 		
-		P -> 1:M as a "Role" set.
-		
-		C -> 1:M as a "Collection" set.
-		
+		Rules
+		=====
 		PC -> P applied to C, where PC1 has a C1 as subcomponent of C2 in PC2.
 		
-		Rule: 		Where P = Void (no permission given), highest permission (e.g. Delete) is presumed.
+		RULE: 		Where P = Void (no permission given), highest permission (e.g. Delete) is presumed.
 		
 		Where: PC2 ⊆ PC1 then P2 < P1 -> C2 has P2 and P2 > P1 -> C2 has P2
 		
@@ -70,14 +84,14 @@
 						permissions as Void are Delete-access (e.g. Full permission), therefore
 						C1 retains Full permission (Delete-access) regardless of C1 permissions.
 		
-		Rule: 		When C1 /= C2, then C1 and C2 retain their permissions even when undefined (Void),
+		RULE: 		When C1 /= C2, then C1 and C2 retain their permissions even when undefined (Void),
 						which is defined (and presumed) as Full or Delete-access.
 
 		Question: 	Where C1 = C2 and E1, but E1 has P1 and P2, and P1 < P2 or P1 > P2, then
 						does C1 have P1 or P2?
 		Answer:		The greater of P1 and P2 is applied.
 		
-		Rule:		When C1 = C2 for a given E1 with 1:P, the highest P wins (is applied).
+		RULE:		When C1 = C2 for a given E1 with 1:P, the highest P wins (is applied).
 		]"
 	define: "UIX (or UX)", "[
 				User Interface Experience or just User Experience.
@@ -92,5 +106,18 @@
 					]"
 class
 	EP_ANY
+
+feature -- Access
+
+	level: HASH_TABLE [STRING, INTEGER]
+			-- `level' of Current {EP_ANY}.
+		once
+			create Result.make (5)
+			Result.extend ("No-Access", 0)
+			Result.extend ("View-Access", 1)
+			Result.extend ("Edit-Access", 2)
+			Result.extend ("Add-Access", 3)
+			Result.extend ("Delete-Access", 4)
+		end
 
 end
