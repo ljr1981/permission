@@ -2,6 +2,13 @@
 	description: "[
 		Abstract notion of an Entity Permission Any (i.e. {EP_ANY}).
 		]"
+	steps: "[
+		(1) Entity
+			(1a) Define/Create an Entity
+		
+		(2) Permissions
+			(1a) Define 1:M Permissions
+		]"
 	design: "[
 		Objects that manage various forms of "permission" (e.g rights).
 		The basic permissions are (from low to high):
@@ -43,29 +50,32 @@
 		
 		Organization
 		============
-		Hypothesis: Entity has Permission on UIX Component as vectors: E x P x C
+		Hypothesis: Entity has Permission on UX Widget as vectors: E x P x C
 
 		BNF
 		===
-			Permission_vector (1) ::=
+			Permission (1) ::=
 				Entity (2)
 				Permission_set (3)
-				Component_set (4)
+				Widget_set (4)
 			
-			Permission_set ::= {Permission}*
+			Permission_set ::= {Widget_set}*
 			
-			Component_set ::= {Component}*
-		
+			Widget_set ::= 
+				Level
+				{UX_widget (5) | Widget_set}*
+			
 			Informative Text
 			-----------------
-			(1) External API has a Permission_vector consisting of E x P' x C'
+			(1) External API has a Permission consisting of E x P' x C'
 			(2) Entity or E
 			(3) Permission_set or P' consisting of 0:1:M P vectors
-			(4) Component_set or C' consisting of 0:1:M C vectors
+			(4) Widget_set or C' consisting of 0:1:M C vectors
+			(5) UX_widget can be: Thick client (EV_*), Thin client (web/mobile), or Service API
 		
 		Rules
 		=====
-		PC -> P applied to C, where PC1 has a C1 as subcomponent of C2 in PC2.
+		PC -> P applied to C, where PC1 has a C1 as subwidget of C2 in PC2.
 		
 		RULE: 		Where P = Void (no permission given), highest permission (e.g. Delete) is presumed.
 		
@@ -93,21 +103,21 @@
 		
 		RULE:		When C1 = C2 for a given E1 with 1:P, the highest P wins (is applied).
 		
-		Components & Component Sets
+		Widgets & Widget Sets
 		===========================
-		Both individual UX Components and collections (sets) of UX Components must have a UUID.
+		Both individual UX Widgets and collections (sets) of UX Widgets must have a UUID.
 		
-		RULE: A UX Component Set has a UUID and each constituent element must have a UUID.
+		RULE: A UX Widget Set has a UUID and each constituent element must have a UUID.
 				Moreover, all UUID's from the root set down must have UUIDs that are unique
 				in the entire set universe.
 				
 		Guaranteeing unique UUID's within a project universe will require a "scanner" test of
 		code within a project (ECF) to ensure all instances of UUID applied to "permissioned"
-		classes holds. While contracts can help by a guarantee for the component-mix at run-time, 
+		classes holds. While contracts can help by a guarantee for the widget-mix at run-time, 
 		they cannot make an overall guarantee at the ECF or library level. This requires a scanner.
 		
-		Therefore, each UIX component that cares about Entity Permission(s) will need to have
-		some form of standard feature denoting its Component UUID.
+		Therefore, each UIX widget that cares about Entity Permission(s) will need to have
+		some form of standard feature denoting its Widget UUID.
 
 		]"
 	define: "UIX (or UX)", "[
@@ -126,38 +136,25 @@ deferred class
 
 feature -- Access
 
-	uuid: STRING
-			-- `uuid' of Current {EP_ANY}.
-		note
-			todo: "[
-				Set as constant in descendents using a UUID string which can be generated
-				on-demand from the EIS link source below. If the EIS URL is not available
-				please find {UUID_GENERATOR_TEST_SET}.generate_uuid feature to generate a
-				new UUID on-demand to a file.
-				]"
-			EIS: "src=https://www.uuidgenerator.net/"
-		deferred
-		end
+	No_access: INTEGER = 0
+	View_access: INTEGER = 1
+	Edit_access: INTEGER = 2
+	Add_access: INTEGER = 3
+	Delete_access: INTEGER = 4
+	Level_count: INTEGER = 5
 
-	permission: INTEGER
-			-- `permission' of Current {EP_ANY}
-		note
-			design: "[
-				Presumes No-Access (level = 0) unless otherwise set.
-				]"
-		attribute
-			Result := 0
-		end
-
-	level: HASH_TABLE [STRING, INTEGER]
-			-- `level' of Current {EP_ANY}.
+	levels: HASH_TABLE [STRING, INTEGER]
+			-- `levels' of Current {EP_ANY}.
 		once
-			create Result.make (5)
-			Result.extend ("No-Access", 0)
-			Result.extend ("View-Access", 1)
-			Result.extend ("Edit-Access", 2)
-			Result.extend ("Add-Access", 3)
-			Result.extend ("Delete-Access", 4)
+			create Result.make (Level_count)
+			Result.extend ("No-Access", no_access)
+			Result.extend ("View-Access", view_access)
+			Result.extend ("Edit-Access", edit_access)
+			Result.extend ("Add-Access", add_access)
+			Result.extend ("Delete-Access", delete_access)
 		end
+
+invariant
+	level_count: levels.count = Level_count
 
 end
