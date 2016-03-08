@@ -71,7 +71,7 @@
 			(2) Entity or E
 			(3) Permission_set or P' consisting of 0:1:M P vectors
 			(4) Widget_set or C' consisting of 0:1:M C vectors
-			(5) UX_widget can be: Thick client (EV_*), Thin client (web/mobile), or Service API
+			(5) UX_widget wraps thick client (EV_*), thin client (web/mobile), or service API
 		
 		Rules
 		=====
@@ -134,13 +134,14 @@
 deferred class
 	EP_ANY
 
-feature -- Access
+feature -- Constants
 
 	No_access: INTEGER = 0
 	View_access: INTEGER = 1
 	Edit_access: INTEGER = 2
 	Add_access: INTEGER = 3
 	Delete_access: INTEGER = 4
+
 	Level_count: INTEGER = 5
 
 	levels: HASH_TABLE [STRING, INTEGER]
