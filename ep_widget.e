@@ -1,6 +1,6 @@
 note
 	description: "[
-		Representation of an {EP_UX_WIDGET}.
+		Representation of an {EP_WIDGET}.
 		]"
 	design: "[
 		A UX (user experience) widget may represent a number of forms
@@ -8,16 +8,21 @@ note
 		client web widgets delivered as HTML/CSS/JS components. It may
 		also represent service feature calls (i.e. web service or DLL).
 		]"
+	BNFE: "[
+		Widget ::=
+			Uuid
+			Description
+		]"
 
 class
-	EP_UX_WIDGET
+	EP_WIDGET
 
 inherit
+	EP_IDENTIFIABLE
+
 	EP_ANY
-
-feature -- Access
-
-	item: detachable ANY
-			-- A possibly Void `item' for Current {EP_UX_WIDGET}.
+		undefine
+			default_create
+		end
 
 end

@@ -134,28 +134,4 @@
 deferred class
 	EP_ANY
 
-feature -- Constants
-
-	No_access: INTEGER = 0
-	View_access: INTEGER = 1
-	Edit_access: INTEGER = 2
-	Add_access: INTEGER = 3
-	Delete_access: INTEGER = 4
-
-	Level_count: INTEGER = 5
-
-	levels: HASH_TABLE [STRING, INTEGER]
-			-- `levels' of Current {EP_ANY}.
-		once
-			create Result.make (Level_count)
-			Result.extend ("No-Access", no_access)
-			Result.extend ("View-Access", view_access)
-			Result.extend ("Edit-Access", edit_access)
-			Result.extend ("Add-Access", add_access)
-			Result.extend ("Delete-Access", delete_access)
-		end
-
-invariant
-	level_count: levels.count = Level_count
-
 end

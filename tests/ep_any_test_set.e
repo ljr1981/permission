@@ -27,6 +27,8 @@ feature -- Test routines
 			-- `ep_any_tests'
 		local
 			l_any: EP_ANY
+			l_widget: EP_WIDGET
+			l_role: EP_ROLE
 		do
 			do_nothing
 		end
