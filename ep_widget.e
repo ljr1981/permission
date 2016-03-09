@@ -55,6 +55,24 @@ feature -- Access
 			create Result.make (Default_registry_capacity)
 		end
 
+feature -- Settings
+
+	set_uuid (a_uuid_string: like uuid)
+			-- `set_uuid' with `a_uuid_string' like `uuid'.
+		do
+			uuid := a_uuid_string
+		ensure
+			set: uuid.same_string (a_uuid_string)
+		end
+
+	set_uuid_from_uuid (a_uuid: UUID)
+			-- `set_uuid_from_uuid' as `a_uuid'.
+		do
+			uuid := a_uuid.out
+		ensure
+			set: uuid.same_string (a_uuid.out)
+		end
+
 feature -- Status Report
 
 	registry_has_uuid (a_uuid: like uuid): BOOLEAN
@@ -75,6 +93,6 @@ invariant
 	not_uuid_unassigned: not uuid.same_string (Unassigned_keyword)
 	uuid_not_empty: not uuid.is_empty
 	is_uuid: (create {UUID}.make_from_string (uuid)).is_valid_uuid (uuid)
-	registry_has_uuid (uuid)
+--	uuid.same_string (Unassigned_keyword) xor registry_has_uuid (uuid)
 
 end
