@@ -21,12 +21,8 @@ feature {NONE} -- Initialization
 			-- <Precursor>
 		do
 			name := "Mock name of role 1"
-			uuid := "C8520A1F-9319-4D43-8F4B-29546FEBB316"
+			permission_level := 4
 			Precursor
 		end
-
-feature {NONE} -- Implementation
-
-	permission_level: INTEGER = 4
 
 end

@@ -48,9 +48,7 @@ feature {NONE} -- Initialization
 	make
 			-- `make' of Current {EP_IDENTIFIABLE}.
 		do
-			check not_in_registry: not registry_has_uuid (uuid)  then
-				uuid_registry.force (True, uuid)
-			end
+			do_nothing
 		end
 
 feature -- Access
@@ -63,19 +61,14 @@ feature -- Access
 			Result := Unassigned_keyword
 		end
 
-	uuid: STRING
-			-- `uuid' of Current {EP_WIDGET}.
-		note
-			warning: "Redefine in descendents as a constant to avoid invariant violation"
-			EIS: "src=https://www.uuidgenerator.net/"
-		attribute
-			Result := Unassigned_keyword
-		end
+feature -- Settings
 
-	uuid_registry: HASH_TABLE [BOOLEAN, STRING]
-			-- `uuid_registry' list.
-		once
-			create Result.make (Default_registry_capacity)
+	set_description (a_description: like description)
+			-- `set_description' with `a_description'.
+		do
+			description := a_description
+		ensure
+			set: description.same_string (a_description)
 		end
 
 feature -- Access: Constants
@@ -83,34 +76,14 @@ feature -- Access: Constants
 	Unassigned_keyword: STRING = "Unassigned"
 			-- `Unassigned_keyword' constant of Current {EP_ANY}.
 
-feature -- Status Report
-
-	registry_has_uuid (a_uuid: like uuid): BOOLEAN
-			-- `registry_has_uuid' for passed `a_uuid'.
-		note
-			design: "[
-				One could write a require contract to prevent the passed
-				`a_uuid' from being in the hash already, but that would
-				cause the software to break. We don't want the software to
-				crash and break. We want the capacity to warn, so the
-				require contract is not implemented.
-				]"
-		do
-			Result := uuid_registry.has_key (a_uuid)
-		end
-
 feature {NONE} -- Implementation: Constants
 
 	Default_registry_capacity: INTEGER = 1_000
 			-- `Default_registry_capacity' constant of Current {EP_ANY}.
 
 invariant
-	not_uuid_unassigned: not uuid.same_string (Unassigned_keyword)
-	not_description_unassigned: not uuid.same_string (Unassigned_keyword)
-	uuid_not_empty: not uuid.is_empty
+	not_description_unassigned: not description.same_string (Unassigned_keyword)
 	description_not_empty: not description.is_empty
-	is_uuid: (create {UUID}.make_from_string (uuid)).is_valid_uuid (uuid)
 	valid_unassigned: Unassigned_keyword.same_string ("Unassigned") -- Strengthens the notion.
-	registry_has_uuid (uuid)
 
 end
