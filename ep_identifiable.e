@@ -40,13 +40,13 @@ feature {NONE} -- Initialization
 
 	make
 			-- `make' of Current {EP_IDENTIFIABLE}.
-		require
-			not_in_list: is_unique_in_registry (uuid)
 		do
-			uuid_registry.force (True, uuid)
+			check not_in_registry: not registry_has_uuid (uuid)  then
+				uuid_registry.force (True, uuid)
+			end
 		end
 
-feature -- Access
+feature {NONE} -- Implementation
 
 	description: STRING
 			-- `description' of Current {EP_WIDGET}.
@@ -65,16 +65,14 @@ feature -- Access
 			Result := Unassigned_keyword
 		end
 
-feature {NONE} -- Implementation
-
 	uuid_registry: HASH_TABLE [BOOLEAN, STRING]
 			-- `uuid_registry' list.
 		once
 			create Result.make (1000)
 		end
 
-	is_unique_in_registry (a_uuid: like uuid): BOOLEAN
-			-- `a_uuid' `is_unique_in_registry'.
+	registry_has_uuid (a_uuid: like uuid): BOOLEAN
+			-- `registry_has_uuid' for passed `a_uuid'.
 		note
 			design: "[
 				One could write a require contract to prevent the passed
@@ -84,7 +82,7 @@ feature {NONE} -- Implementation
 				require contract is not implemented.
 				]"
 		do
-			Result := not uuid_registry.has_key (a_uuid)
+			Result := uuid_registry.has_key (a_uuid)
 		end
 
 feature {NONE} -- Implementation: Constants
@@ -94,8 +92,8 @@ feature {NONE} -- Implementation: Constants
 
 invariant
 	not_uuid_unassigned: not uuid.same_string (Unassigned_keyword)
+	not_description_unassigned: not uuid.same_string (Unassigned_keyword)
 	uuid_not_empty: not uuid.is_empty
 	is_uuid: (create {UUID}.make_from_string (uuid)).is_valid_uuid (uuid)
-	not_description_unassigned: not uuid.same_string (Unassigned_keyword)
 
 end

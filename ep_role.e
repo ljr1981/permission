@@ -1,19 +1,21 @@
 note
 	description: "[
-		Representation of an {EP_ROLE}.
+		Abstract notion of an {EP_ROLE}.
 		]"
 	design: "[
 		An {EP_ROLE} is the nexus point between an {EP_OPERATIVE},
 		{EP_WIDGET} and `permission_level'
 		]"
 
-class
+deferred class
 	EP_ROLE
 
 inherit
 	EP_IDENTIFIABLE
 		rename
 			description as name
+		redefine
+			make
 		end
 
 	EP_ANY
@@ -21,10 +23,29 @@ inherit
 			default_create
 		end
 
+feature {NONE} -- Initialization
+
+	make
+			-- <Precursor>
+		note
+			design: "[
+				Unlike {EP_WIDGET}, the {EP_ROLE} wants its `uuid' to be
+				found in the registry already, which means that widgets
+				must be created and registered before the roles that want
+				to access them.
+				]"
+		do
+			check in_registry: registry_has_uuid (uuid)  then
+				uuid_registry.force (True, uuid)
+			end
+		end
+
 feature {NONE} -- Implementation
 
 	permission_level: INTEGER
 			-- `permission_level' of Current {EP_IDENTIFIABLE} given `levels' et al.
+		deferred
+		end
 
 feature {NONE} -- Implementation: Constants
 
