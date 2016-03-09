@@ -28,13 +28,14 @@ feature -- Test routines
 		local
 			l_widget: EP_WIDGET
 			l_role: EP_ROLE
-			l_mock_1: MOCK_WIDGET_1
-			l_mock_2: MOCK_WIDGET_2
+			l_mock_widget_1: MOCK_WIDGET_1
+			l_mock_widget_2: MOCK_WIDGET_2
 			l_mock_role_1: MOCK_ROLE_1
 		do
+--			create l_mock_role_1 -- NOT Possible, so don't even try!
 --			create l_mock_role_1.make -- See design note on {EP_ROLE}.make as this will fail if you uncomment it.
-			create l_mock_1.make
-			create l_mock_2.make
+			create l_mock_widget_1.make
+			create l_mock_widget_2.make
 			create l_mock_role_1.make
 		end
 

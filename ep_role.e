@@ -35,9 +35,7 @@ feature {NONE} -- Initialization
 				to access them.
 				]"
 		do
-			check in_registry: registry_has_uuid (uuid)  then
-				uuid_registry.force (True, uuid)
-			end
+			do_nothing -- NO PRECURSOR!
 		end
 
 feature {NONE} -- Implementation

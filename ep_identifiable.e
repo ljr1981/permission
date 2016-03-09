@@ -33,6 +33,13 @@ feature {NONE} -- Initialization
 					redefine default_create to facilitate your design need.
 					For redefinition, you will need to remove the "frozen".
 				]"
+			design: "[
+				Because we need {EP_IDENTIFIABLE} things to be loadable from
+				storage, we cannot depend on default values or constants. As
+				such, we are taking away any future possibility of `default_create'
+				from this class. If you need to bring it back, you must have a
+				VERY GOOD reason! :-)
+				]"
 		do
 			Precursor
 			check do_not_create: False end
@@ -44,8 +51,6 @@ feature {NONE} -- Initialization
 			check not_in_registry: not registry_has_uuid (uuid)  then
 				uuid_registry.force (True, uuid)
 			end
-		ensure
-			valid_registry_state: registry_has_uuid (uuid)
 		end
 
 feature -- Access
@@ -105,5 +110,7 @@ invariant
 	uuid_not_empty: not uuid.is_empty
 	description_not_empty: not description.is_empty
 	is_uuid: (create {UUID}.make_from_string (uuid)).is_valid_uuid (uuid)
+	valid_unassigned: Unassigned_keyword.same_string ("Unassigned") -- Strengthens the notion.
+	registry_has_uuid (uuid)
 
 end
