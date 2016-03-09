@@ -38,6 +38,14 @@ feature {NONE} -- Initialization
 			check do_not_create: False end
 		end
 
+	make
+			-- `make' of Current {EP_IDENTIFIABLE}.
+		require
+			not_in_list: is_unique_in_registry (uuid)
+		do
+			uuid_registry.force (True, uuid)
+		end
+
 feature -- Access
 
 	description: STRING
@@ -52,8 +60,31 @@ feature -- Access
 			-- `uuid' of Current {EP_WIDGET}.
 		note
 			warning: "Redefine in descendents as a constant to avoid invariant violation"
+			EIS: "src=https://www.uuidgenerator.net/"
 		once ("OBJECT")
 			Result := Unassigned_keyword
+		end
+
+feature {NONE} -- Implementation
+
+	uuid_registry: HASH_TABLE [BOOLEAN, STRING]
+			-- `uuid_registry' list.
+		once
+			create Result.make (1000)
+		end
+
+	is_unique_in_registry (a_uuid: like uuid): BOOLEAN
+			-- `a_uuid' `is_unique_in_registry'.
+		note
+			design: "[
+				One could write a require contract to prevent the passed
+				`a_uuid' from being in the hash already, but that would
+				cause the software to break. We don't want the software to
+				crash and break. We want the capacity to warn, so the
+				require contract is not implemented.
+				]"
+		do
+			Result := not uuid_registry.has_key (a_uuid)
 		end
 
 feature {NONE} -- Implementation: Constants
@@ -63,6 +94,8 @@ feature {NONE} -- Implementation: Constants
 
 invariant
 	not_uuid_unassigned: not uuid.same_string (Unassigned_keyword)
+	uuid_not_empty: not uuid.is_empty
+	is_uuid: (create {UUID}.make_from_string (uuid)).is_valid_uuid (uuid)
 	not_description_unassigned: not uuid.same_string (Unassigned_keyword)
 
 end

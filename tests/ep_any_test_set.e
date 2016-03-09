@@ -29,8 +29,12 @@ feature -- Test routines
 			l_any: EP_ANY
 			l_widget: EP_WIDGET
 			l_role: EP_ROLE
+			l_mock_1: MOCK_WIDGET_1
+			l_mock_2: MOCK_WIDGET_2
 		do
 			do_nothing
+			create l_mock_1.make
+			create l_mock_2.make
 		end
 
 end
