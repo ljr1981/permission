@@ -44,15 +44,17 @@ feature {NONE} -- Initialization
 			check not_in_registry: not registry_has_uuid (uuid)  then
 				uuid_registry.force (True, uuid)
 			end
+		ensure
+			valid_registry_state: registry_has_uuid (uuid)
 		end
 
-feature {NONE} -- Implementation
+feature -- Access
 
 	description: STRING
 			-- `description' of Current {EP_WIDGET}.
 		note
 			warning: "Redefine in descendents as a constant to avoid invariant violation"
-		once ("OBJECT")
+		attribute
 			Result := Unassigned_keyword
 		end
 
@@ -61,15 +63,22 @@ feature {NONE} -- Implementation
 		note
 			warning: "Redefine in descendents as a constant to avoid invariant violation"
 			EIS: "src=https://www.uuidgenerator.net/"
-		once ("OBJECT")
+		attribute
 			Result := Unassigned_keyword
 		end
 
 	uuid_registry: HASH_TABLE [BOOLEAN, STRING]
 			-- `uuid_registry' list.
 		once
-			create Result.make (1000)
+			create Result.make (Default_registry_capacity)
 		end
+
+feature -- Access: Constants
+
+	Unassigned_keyword: STRING = "Unassigned"
+			-- `Unassigned_keyword' constant of Current {EP_ANY}.
+
+feature -- Status Report
 
 	registry_has_uuid (a_uuid: like uuid): BOOLEAN
 			-- `registry_has_uuid' for passed `a_uuid'.
@@ -87,13 +96,14 @@ feature {NONE} -- Implementation
 
 feature {NONE} -- Implementation: Constants
 
-	Unassigned_keyword: STRING = "Unassigned"
-			-- `Unassigned_keyword' constant of Current {EP_ANY}
+	Default_registry_capacity: INTEGER = 1_000
+			-- `Default_registry_capacity' constant of Current {EP_ANY}.
 
 invariant
 	not_uuid_unassigned: not uuid.same_string (Unassigned_keyword)
 	not_description_unassigned: not uuid.same_string (Unassigned_keyword)
 	uuid_not_empty: not uuid.is_empty
+	description_not_empty: not description.is_empty
 	is_uuid: (create {UUID}.make_from_string (uuid)).is_valid_uuid (uuid)
 
 end

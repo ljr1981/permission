@@ -9,19 +9,20 @@ class
 inherit
 	EP_WIDGET
 		redefine
-			description,
-			uuid
+			make
 		end
 
 create
 	make
 
-feature -- Access
+feature {NONE} -- Initialization
 
-	description: STRING = "Mock description of widget 1"
+	make
 			-- <Precursor>
-
-	uuid: STRING = "C8520A1F-9319-4D43-8F4B-29546FEBB316"
-			-- <Precursor>
+		do
+			description := "Mock description of widget 1"
+			uuid := "C8520A1F-9319-4D43-8F4B-29546FEBB316"
+			Precursor
+		end
 
 end

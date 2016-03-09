@@ -9,20 +9,21 @@ class
 inherit
 	EP_ROLE
 		redefine
-			name,
-			uuid
+			make
 		end
 
 create
 	make
 
-feature -- Access
+feature {NONE} -- Initialization
 
-	name: STRING = "Mock name of role 1"
+	make
 			-- <Precursor>
-
-	uuid: STRING = "C8520A1F-9319-4D43-8F4B-29546FEBB316"
-			-- <Precursor>
+		do
+			name := "Mock name of role 1"
+			uuid := "C8520A1F-9319-4D43-8F4B-29546FEBB316"
+			Precursor
+		end
 
 feature {NONE} -- Implementation
 
