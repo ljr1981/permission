@@ -32,6 +32,7 @@ feature -- Test routines
 			l_widget.set_uuid (Mock_uuid)
 			l_widget.set_uuid_from_uuid (create {UUID}.make_from_string (Mock_uuid))
 			assert_strings_equal ("same_uuid", Mock_uuid, l_widget.uuid)
+			l_widget.set_description ("This is my description")
 		end
 
 feature {NONE} -- Implementation

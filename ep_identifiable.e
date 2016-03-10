@@ -65,6 +65,9 @@ feature -- Settings
 
 	set_description (a_description: like description)
 			-- `set_description' with `a_description'.
+		require
+			non_empty: not a_description.is_empty
+			not_has_description: not description.is_empty
 		do
 			description := a_description
 		ensure
