@@ -13,7 +13,7 @@ deferred class
 	EP_IDENTIFIABLE
 
 inherit
-	ANY
+	EP_ANY
 		redefine
 			default_create
 		end

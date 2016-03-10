@@ -14,18 +14,13 @@ note
 			Description
 		]"
 
-class
-	EP_WIDGET
+deferred class
+	EP_WIDGET [G -> ANY]
 
 inherit
 	EP_IDENTIFIABLE
 		redefine
 			make
-		end
-
-	EP_ANY
-		undefine
-			default_create
 		end
 
 feature {NONE} -- Initialization
@@ -36,6 +31,7 @@ feature {NONE} -- Initialization
 			check not_in_registry: not registry_has_uuid (uuid)  then
 				uuid_registry.force (True, uuid)
 			end
+			hookup
 		end
 
 feature -- Access
@@ -73,6 +69,14 @@ feature -- Settings
 			set: uuid.same_string (a_uuid.out)
 		end
 
+	set_widget (a_widget: like widget)
+			-- `set_widget' with `a_widget' into `widget'.
+		do
+			widget := a_widget
+		ensure
+			set: widget ~ a_widget
+		end
+
 feature -- Status Report
 
 	registry_has_uuid (a_uuid: like uuid): BOOLEAN
@@ -88,6 +92,25 @@ feature -- Status Report
 		do
 			Result := uuid_registry.has_key (a_uuid)
 		end
+
+feature {EP_WIDGET} -- Implementation
+
+	widget: detachable G
+			-- `widget' of Current {EP_WIDGET}.
+			-- EV_CONTAINER or EV_PRIMITIVE
+
+feature {NONE} -- Implementation: Basic Operations
+
+	hookup
+			-- `hookup' `widget' to parent.
+		deferred
+		end
+
+	on_no_access do  end
+	on_view_access do  end
+	on_edit_access do  end
+	on_add_access do  end
+	on_delete_access do  end
 
 invariant
 	not_uuid_unassigned: not uuid.same_string (Unassigned_keyword)

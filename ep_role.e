@@ -17,11 +17,6 @@ inherit
 			set_description as set_name
 		end
 
-	EP_ANY
-		undefine
-			default_create
-		end
-
 feature -- Settings
 
 	set_permission_level (a_permission_level: like permission_level)

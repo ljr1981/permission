@@ -26,8 +26,8 @@ feature -- Test routines
 	ep_any_tests
 			-- `ep_any_tests'
 		local
-			l_widget: EP_WIDGET
-			l_role: EP_ROLE
+--			l_widget: EP_WIDGET [EV_WIDGET]
+--			l_role: EP_ROLE
 			l_mock_widget_1: MOCK_WIDGET_1
 			l_mock_widget_2: MOCK_WIDGET_2
 			l_mock_role_1: MOCK_ROLE_1
