@@ -6,6 +6,11 @@ note
 		An {EP_ROLE} is the nexus point between an {EP_OPERATIVE},
 		{EP_WIDGET}s and `permission_level'
 		]"
+	ideas: "[
+		* Related roles?
+		* Subroles?
+		* 
+		]"
 
 deferred class
 	EP_ROLE
