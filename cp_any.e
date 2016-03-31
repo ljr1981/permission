@@ -61,7 +61,7 @@ note
 		│attached	list_feature (2)  │	Secret		  │	Exported			  │	List-item-set		  │	List-item-add	  │	List-item-delete	  │
 		├─────────────────────────────┼───────────────┼───────────────────────┼───────────────────────┼───────────────────┼───────────────────────┤
 		│attached	item_control (4)  │	Hidden		  │	Read-only (1)		  │	Item-editable (3)	  │	Item-editable (3) │	Item-editable (3)	  │
-		│attached	list_control	  │	Hidden		  │	Read-only (1)		  │	List-item-editable (3)│	List-item-add (3) │	List-item-delete (3)  │
+		│attached	list_control (5)  │	Hidden		  │	Read-only (1)		  │	List-item-editable (3)│	List-item-add (3) │	List-item-delete (3)  │
 		└─────────────────────────────┴───────────────┴───────────────────────┴───────────────────────┴───────────────────┴───────────────────────┘
 		Footnotes
 		---------
@@ -82,10 +82,29 @@ note
 				temporary or permanent permission upgrade to the underling. Like Redaction, the granting
 				has rules that govern how long the underling retains the permission upgrade.
 		(4) Also allow for notions of defaults and minimums.
-				
+		(5) A `list_control' can also be a `control_container', where its "list" are the `control_item's
+			contained within it.
+		
+		
 		Applying UIX Permissions
 		========================
-		Based on the information writeup above, we can now consider what it means to
+		Based on the information writeup above, we can now consider what it means to have a permission
+		and then apply it.
+		
+		A {CP_PERMISSION} is applied optionally to some `item_control' or `list_control'. Therefore,
+		each `item_control' or `list_control' may or may not have a {CP_PERMISSION}.
+		
+		Each {CP_PERMISSION} is applied on the basis of some {CP_CLIENT}, where the client is the one
+		requiring access to the `item_control' or `list_control'. Therefore, applying permissions is
+		the confluence of: 
+			
+			Permission_set ::= {CP_PERMISSION} {CP_CLIENT} Permissioned_item
+				
+			Permissioned_item ::= item_control | list_control | control_container
+		
+		To make this possible, each Permissioned_item needs a UUID (of some form), together with a
+		human-readable-description, indicating what the Permissioned_item means to the {CP_CLIENT}
+		(e.g. its semantic). Ultimately, a Permissioned_item is a {CP_PERMISSIONED_ITEM}.
 		]"
 	define: "UIX (or UX)", "[
 				User Interface Experience or just User Experience.

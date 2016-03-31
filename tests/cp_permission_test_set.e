@@ -33,7 +33,7 @@ feature -- Test routines
 		local
 			l_permission: CP_PERMISSION
 		do
-			create l_permission
+			do_nothing -- yet ...
 		end
 
 end
