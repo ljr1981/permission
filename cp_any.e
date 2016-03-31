@@ -3,11 +3,8 @@
 		Abstract notion of an Client Permission Any (i.e. {CP_ANY}).
 		]"
 	steps: "[
-		(1) Entity
-			(1a) Define/Create an Entity
-		
-		(2) Permissions
-			(1a) Define 1:M Permissions
+		(1) Client: Define/Create an Client
+		(2) Permissions: Define 1:M Permissions
 		]"
 	design: "[
 		Objects that manage various forms of "permission" (e.g rights).
@@ -38,7 +35,7 @@
 		and operations of a system, we need the notion of a permission.
 		
 		UIX
-		===				
+		===																Item			Item
 										Enabled/						Creation		Delete
 						Visible			Disabled		Redacted		Enabled			Enabled
 						=======			========		========		========		=======
@@ -48,77 +45,42 @@
 		(3) Add		- 	Yes				Enabled			No				Yes				No
 		(4) Delete	- 	Yes				Enabled			No				Yes				Yes
 		
-		Organization
-		============
-		Hypothesis: Entity has Permission on UX Widget as vectors: E x P x C
-
-		BNF
-		===
-			Permission (1) ::=
-				Entity (2)
-				Permission_set (3)
-				Widget_set (4)
-			
-			Permission_set ::= {Widget_set}*
-			
-			Widget_set ::= 
-				Level
-				{UX_widget (5) | Widget_set}*
-			
-			Informative Text
-			-----------------
-			(1) External API has a Permission consisting of E x P' x C'
-			(2) Entity or E
-			(3) Permission_set or P' consisting of 0:1:M P vectors
-			(4) Widget_set or C' consisting of 0:1:M C vectors
-			(5) UX_widget wraps thick client (EV_*), thin client (web/mobile), or service API
 		
-		Rules
-		=====
-		PC -> P applied to C, where PC1 has a C1 as subwidget of C2 in PC2.
 		
-		RULE: 		Where P = Void (no permission given), highest permission (e.g. Delete) is presumed.
-		
-		Where: PC2 ⊆ PC1 then P2 < P1 -> C2 has P2 and P2 > P1 -> C2 has P2
-		
-		Question: 	When C1 is contained in C2, do the permissions of C2 change the permissions of C1?
-		Answer:		C1 permissions are retained regardless of C2 permissions.
-		
-		Question:	When C1 is contained in C2 and C2 permissions are Void and C1 permissions are
-						not, are the permissions of C2 retained?
-		Answer:		C1 permissions are retained regardless of C2 permissions.
-		
-		Question:	When C1 is contained in C2 and C1 permissions are Void and C2 permissions are
-						not, are the permissions of C1 retained?
-		Answer:		C1 permissions are retained regardless of C2 permissions, which means C1
-						permissions as Void are Delete-access (e.g. Full permission), therefore
-						C1 retains Full permission (Delete-access) regardless of C1 permissions.
-		
-		RULE: 		When C1 /= C2, then C1 and C2 retain their permissions even when undefined (Void),
-						which is defined (and presumed) as Full or Delete-access.
-
-		Question: 	Where C1 = C2 and E1, but E1 has P1 and P2, and P1 < P2 or P1 > P2, then
-						does C1 have P1 or P2?
-		Answer:		The greater of P1 and P2 is applied.
-		
-		RULE:		When C1 = C2 for a given E1 with 1:P, the highest P wins (is applied).
-		
-		Widgets & Widget Sets
-		===========================
-		Both individual UX Widgets and collections (sets) of UX Widgets must have a UUID.
-		
-		RULE: A UX Widget Set has a UUID and each constituent element must have a UUID.
-				Moreover, all UUID's from the root set down must have UUIDs that are unique
-				in the entire set universe.
+									  ┌───────────────┬───────────────────────┬───────────────────────┬───────────────────┬───────────────────────┐
+	  			VRUCD Applied		  │	 View (1)	  │		Edit			  │						  │					  │						  │
+				=============		  │	 None		  │	(Redacted/Disabled)	  │	      (Enabled)		  │	     Add		  │		  Delete		  │
+		┌─────────────────────────────┼───────────────┼───────────────────────┼───────────────────────┼───────────────────┼───────────────────────┤
+		│detachable	item_feature	  │	Secret		  │	Exported			  │	Setter				  │	n/a				  │	n/a					  │
+		│attached	item_feature	  │	Secret		  │	Exported			  │	Setter				  │	n/a				  │	n/a					  │
+		│detachable	list_feature	  │	Secret		  │	Exported			  │	Setter				  │	n/a				  │	n/a					  │
+		│attached	list_feature (2)  │	Secret		  │	Exported			  │	List-item-set		  │	List-item-add	  │	List-item-delete	  │
+		├─────────────────────────────┼───────────────┼───────────────────────┼───────────────────────┼───────────────────┼───────────────────────┤
+		│attached	item_control	  │	Hidden		  │	Read-only (1)		  │	Item-editable (3)	  │	Item-editable (3) │	Item-editable (3)	  │
+		│attached	list_control	  │	Hidden		  │	Read-only (1)		  │	List-item-editable (3)│	List-item-add (3) │	List-item-delete (3)  │
+		└─────────────────────────────┴───────────────┴───────────────────────┴───────────────────────┴───────────────────┴───────────────────────┘
+		Footnotes
+		---------
+		(1) Once a UIX control can be seen, then we can consider if it is Redacted. It can remain
+			Redacted even if it is editable (e.g. password fields are this way). However, the Redaction
+			can be turned off briefly based upon certain rules, such as:
+				(a) Temporary (until field exit)
+				(b) Temporary (timed)
+				(c) Temporary (field exit and timed)
+				(d) Temporary (until window exit)
+				(e) Temporary (until window lost focus)
+				(f) Temporary (until session exit)
+				(g) Permanent (via other user with correct permission)
+		(2) A List_feature will be of types such as LIST, ARRAY, BAG, and so on. Notions of VRUCD are
+			handled by the Eiffel language specification and available features on each class.
+		(3) Once a UIX control can be edited, Added-to, or Deleted-from, there is a further notion of
+			a "Manager override"--that is--someone with greater authority or permission can grant either
+				temporary or permanent permission upgrade to the underling. Like Redaction, the granting
+				has rules that govern how long the underling retains the permission upgrade.
 				
-		Guaranteeing unique UUID's within a project universe will require a "scanner" test of
-		code within a project (ECF) to ensure all instances of UUID applied to "permissioned"
-		classes holds. While contracts can help by a guarantee for the widget-mix at run-time, 
-		they cannot make an overall guarantee at the ECF or library level. This requires a scanner.
+		Applying UIX Permissions
+		========================
 		
-		Therefore, each UIX widget that cares about Entity Permission(s) will need to have
-		some form of standard feature denoting its Widget UUID.
-
 		]"
 	define: "UIX (or UX)", "[
 				User Interface Experience or just User Experience.
@@ -131,7 +93,7 @@
 					A ⊄ B	Not a Subset: A is not a subset of B			{1,6} ⊄ C
 					A ⊇ B	Superset: A has same elements as B, or more		{1,2,3} ⊇ {1,2,3}
 					]"
-deferred class
+class
 	CP_ANY
 
 end

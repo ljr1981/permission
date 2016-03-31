@@ -8,7 +8,7 @@ note
 	testing: "type/manual"
 
 class
-	EP_ANY_TEST_SET
+	CP_ANY_TEST_SET
 
 inherit
 	EQA_TEST_SET
@@ -25,13 +25,15 @@ inherit
 		undefine
 			default_create
 		end
-		
+
 feature -- Test routines
 
 	ep_any_tests
 			-- `ep_any_tests'
 		local
+			l_any: CP_ANY
 		do
+			create l_any
 		end
 
 end
