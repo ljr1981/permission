@@ -35,8 +35,8 @@ feature -- Access
 
 feature -- Basic Operations
 
-	applied_level_to_children
-			-- `apply_level_to_children'.
+	apply_level_to_children
+			-- `apply_level_to_children' applies `level' to `children' in upgrade/downgrade of permission.
 		note
 			design: "[
 				We only upgrade or downgrade based on the rules we have at

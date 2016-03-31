@@ -33,7 +33,7 @@ feature -- Test routines
 		local
 			l_any: CP_ANY
 		do
-			create l_any
+			do_nothing -- yet ...
 		end
 
 end

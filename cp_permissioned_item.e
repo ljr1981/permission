@@ -9,17 +9,47 @@ deferred class
 inherit
 	FW_UU_IDENTIFIED
 
+feature {NONE} -- Initialization
+
+	make_with_client (a_client: like client)
+			-- `make_with_client' `a_client'.
+		do
+			default_create
+			client := a_client
+		ensure
+			set: client ~ a_client
+		end
+
 feature -- Access
 
 	item: G
 			-- `item' receiving `permission'.
 
-	permission: CP_PERMISSION
-			-- `permission' being given to `item'.
+	client: CP_CLIENT
+			-- `client' of Current.
+
+feature -- Basic Operations
+
+	set_item_permission
+			-- `set_item_permission'.
 		deferred
 		end
 
-note
+	set_new_client_level (a_level: INTEGER)
+			-- `set_new_client_level' changes `level' on `client' permission.
+		do
+			across
+				client.permissions as ic_perm
+			loop
+				if ic_perm.item.uuid_string.same_string (uuid_string) then
+					ic_perm.item.set_level (a_level)
+					ic_perm.item.apply_level_to_children
+					set_item_permission
+				end
+			end
+		end
+
+;note
 	design: "[
 		A Permissioned_item is an {EV_WIDGET} (or web control) that has been given
 		a {CP_PERMISSION}.

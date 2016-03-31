@@ -22,6 +22,9 @@ feature -- Access
 			create Result.make (Default_child_capacity)
 		end
 
+	permissions: ARRAYED_LIST [CP_PERMISSION]
+			-- `permissions' given to Current {CP_CLIENT}.
+
 feature {NONE} -- Implementation
 
 	Default_child_capacity: INTEGER = 100

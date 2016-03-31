@@ -98,13 +98,31 @@ note
 		requiring access to the `item_control' or `list_control'. Therefore, applying permissions is
 		the confluence of: 
 			
-			Permission_set ::= {CP_PERMISSION} {CP_CLIENT} Permissioned_item
+			Permission_set ::= {CP_PERMISSION} {CP_CLIENT} {CP_PERMISSIONED_ITEM}
+			
+			{CP_CLIENT} ::=
+				Name
+				Children (1)
+				Permissions_list (2)
 				
-			Permissioned_item ::= item_control | list_control | control_container
+			{CP_PERMISSION} ::=
+				Item_UUID (3)
+			
+			{CP_PERMISSIONED_ITEM} ::= 
+				item_control | 
+					list_control | 
+					control_container
+				Item_UUID (3)
+			
+		(1) The Children allow for parent {CP_CLIENT} items to provide upgrades/downgrades and groups.
+		(2) The Permission_list is a list of {CP_PERMISSION} items given to a {CP_CLIENT}.
+		(3) The Item_UUID in {CP_PERMISSION} matches the one in {CP_PERMISSIONED_ITEM}. Therefore,
+			a {CP_PERMISSIONED_ITEM} will look to see if a supplied {CP_CLIENT} has matching {CP_PERMISSION}
+			items in its Permission_list.
 		
-		To make this possible, each Permissioned_item needs a UUID (of some form), together with a
-		human-readable-description, indicating what the Permissioned_item means to the {CP_CLIENT}
-		(e.g. its semantic). Ultimately, a Permissioned_item is a {CP_PERMISSIONED_ITEM}.
+		To make this possible, each {CP_PERMISSIONED_ITEM} needs a UUID (of some form), together with a
+		human-readable-description, indicating what the {CP_PERMISSIONED_ITEM} means to the {CP_CLIENT}
+		(e.g. its semantic).
 		]"
 	define: "UIX (or UX)", "[
 				User Interface Experience or just User Experience.
