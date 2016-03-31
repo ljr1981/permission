@@ -17,11 +17,11 @@
 		<library name="vision2" location="$ISE_LIBRARY\library\vision2\vision2-safe.ecf"/>
 		<cluster name="permission" location=".\" recursive="true">
 			<file_rule>
+				<exclude>/.git$</exclude>
+				<exclude>/.svn$</exclude>
+				<exclude>/CVS$</exclude>
 				<exclude>/EIFGENs$</exclude>
 				<exclude>tests</exclude>
-				<exclude>/CVS$</exclude>
-				<exclude>/.svn$</exclude>
-				<exclude>/.git$</exclude>
 			</file_rule>
 		</cluster>
 	</target>
@@ -30,14 +30,15 @@
 		<root class="ANY" feature="default_create"/>
 		<file_rule>
 			<exclude>/.git$</exclude>
-			<exclude>/EIFGENs$</exclude>
-			<exclude>/CVS$</exclude>
 			<exclude>/.svn$</exclude>
+			<exclude>/CVS$</exclude>
+			<exclude>/EIFGENs$</exclude>
 			<include>tests</include>
 		</file_rule>
 		<option profile="false">
 		</option>
 		<setting name="console_application" value="false"/>
+		<library name="test_set_bridge" location="$GITHUB\test_extension\test_set_bridge.ecf"/>
 		<library name="testing" location="$ISE_LIBRARY\library\testing\testing-safe.ecf"/>
 		<cluster name="tests" location=".\tests\" recursive="true"/>
 	</target>

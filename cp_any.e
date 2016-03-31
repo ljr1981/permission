@@ -1,6 +1,6 @@
 ﻿note
 	description: "[
-		Abstract notion of an Entity Permission Any (i.e. {EP_ANY}).
+		Abstract notion of an Client Permission Any (i.e. {CP_ANY}).
 		]"
 	steps: "[
 		(1) Entity
@@ -132,6 +132,6 @@
 					A ⊇ B	Superset: A has same elements as B, or more		{1,2,3} ⊇ {1,2,3}
 					]"
 deferred class
-	EP_ANY
+	CP_ANY
 
 end
