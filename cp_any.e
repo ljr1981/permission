@@ -2,6 +2,14 @@
 	description: "[
 		Abstract notion of an Client Permission Any (i.e. {CP_ANY}).
 		]"
+class
+	CP_ANY
+
+feature {NONE} -- Implementation
+
+
+
+note
 	steps: "[
 		(1) Client: Define/Create an Client
 		(2) Permissions: Define 1:M Permissions
@@ -56,7 +64,7 @@
 		│detachable	list_feature	  │	Secret		  │	Exported			  │	Setter				  │	n/a				  │	n/a					  │
 		│attached	list_feature (2)  │	Secret		  │	Exported			  │	List-item-set		  │	List-item-add	  │	List-item-delete	  │
 		├─────────────────────────────┼───────────────┼───────────────────────┼───────────────────────┼───────────────────┼───────────────────────┤
-		│attached	item_control	  │	Hidden		  │	Read-only (1)		  │	Item-editable (3)	  │	Item-editable (3) │	Item-editable (3)	  │
+		│attached	item_control (4)  │	Hidden		  │	Read-only (1)		  │	Item-editable (3)	  │	Item-editable (3) │	Item-editable (3)	  │
 		│attached	list_control	  │	Hidden		  │	Read-only (1)		  │	List-item-editable (3)│	List-item-add (3) │	List-item-delete (3)  │
 		└─────────────────────────────┴───────────────┴───────────────────────┴───────────────────────┴───────────────────┴───────────────────────┘
 		Footnotes
@@ -77,10 +85,11 @@
 			a "Manager override"--that is--someone with greater authority or permission can grant either
 				temporary or permanent permission upgrade to the underling. Like Redaction, the granting
 				has rules that govern how long the underling retains the permission upgrade.
+		(4) Also allow for notions of defaults and minimums.
 				
 		Applying UIX Permissions
 		========================
-		
+		Based on the information writeup above, we can now consider what it means to
 		]"
 	define: "UIX (or UX)", "[
 				User Interface Experience or just User Experience.
@@ -93,7 +102,4 @@
 					A ⊄ B	Not a Subset: A is not a subset of B			{1,6} ⊄ C
 					A ⊇ B	Superset: A has same elements as B, or more		{1,2,3} ⊇ {1,2,3}
 					]"
-class
-	CP_ANY
-
 end
