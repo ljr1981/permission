@@ -37,6 +37,22 @@ feature -- Basic Operations
 	redacted_text: detachable STRING
 			-- `redacted_text' of `item'.
 
+	set_item_permission
+			-- <Precursor>
+		do
+			across
+				client.permissions as ic
+			loop
+				if ic.item.uuid_string.same_string (uuid_string) then
+					if ic.item.level <= ic.item.view then
+						item.disable_sensitive
+					else
+						item.enable_sensitive
+					end
+				end
+			end
+		end
+
 feature {NONE} -- Implementation
 
 	Redaction_character: CHARACTER = '*'

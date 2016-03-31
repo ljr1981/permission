@@ -11,11 +11,11 @@ inherit
 
 feature -- Access
 
-	items: HASH_TABLE [UUID, STRING]
+	build_items
 			-- <Precursor>
-		once
-			create Result.make (Default_registry_item_capacity)
-			Result.force (create {UUID}.make_from_string ({MOCK_CARTOON_NAME_FIELD}.uuid_string), {MOCK_CARTOON_NAME_FIELD}.uuid_string)
+		do
+			put_unique ({MOCK_CARTOON_NAME_FIELD}.uuid_string)
+			put_unique ({MOCK_PHONE_NUMBER_FIELD}.uuid_string)
 		end
 
 end

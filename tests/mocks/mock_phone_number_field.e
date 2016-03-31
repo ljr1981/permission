@@ -1,10 +1,10 @@
 note
 	description: "[
-		Mock representation of a {MOCK_CARTOON_NAME_FIELD}.
+		Mock representation of a {MOCK_PHONE_NUMBER_FIELD}.
 		]"
 
 class
-	MOCK_CARTOON_NAME_FIELD
+	MOCK_PHONE_NUMBER_FIELD
 
 inherit
 	CP_PERMISSIONED_EV_TEXT_FIELD
@@ -20,15 +20,15 @@ feature {NONE} -- Initialization
 	default_create
 			-- <Precursor>
 		do
-			create item.make_with_text ("Cartoon Name")
+			create item.make_with_text ("770-295-9729")
 		end
 
 feature -- Access
 
-	uuid_string: STRING = "553E9CF6-6732-402E-A2DE-4C3AA5A52F43"
+	uuid_string: STRING = "8907FB18-4051-47F5-A940-8F3AD2F71842"
 			-- <Precursor>
 
-	human_readable_name: STRING = "Mock cartoon name text field"
+	human_readable_name: STRING = "Mock phone number text field"
 			-- <Precursor>
 
 feature {NONE} -- Implementation
