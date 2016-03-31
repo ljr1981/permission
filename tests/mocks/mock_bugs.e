@@ -16,14 +16,15 @@ feature -- Access
 
 	name: STRING = "Bugs Bunny"
 
-	permissions: ARRAYED_LIST [CP_PERMISSION]
+	permissions: HASH_TABLE [CP_PERMISSION, STRING]
 			-- <Precursor>
+		local
+			l_permission: MOCK_PERMISSION
 		attribute
 			create Result.make (Default_child_capacity)
-			Result.force (create {MOCK_PERMISSION})
+			create l_permission
+			Result.force (l_permission, l_permission.uuid_string)
 		end
-
-	uuid_string: STRING = "66B35389-BF3F-4B43-B2EF-687C5538D162"
 
 note
 	design: "[

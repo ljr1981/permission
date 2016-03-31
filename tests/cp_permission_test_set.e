@@ -46,7 +46,6 @@ feature -- Test routines
 		do
 			create l_client
 			create l_control.make_with_client (l_client)
-			assert_equal ("level", {CP_PERMISSION}.delete, l_client.permissions [1].level)
 			assert_strings_equal ("characters", "Warner-Bros.", l_client.name)
 			assert_strings_equal ("bugsy", "Bugs Bunny", l_client.children [1].name)
 			assert_32 ("is_enabled", l_control.item.is_sensitive)

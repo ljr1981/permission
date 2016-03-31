@@ -7,6 +7,8 @@ deferred class
 	CP_PERMISSIONED_ITEM [G -> ANY]
 
 inherit
+	CP_ANY
+
 	FW_UU_IDENTIFIED
 
 feature {NONE} -- Initialization
@@ -25,6 +27,11 @@ feature -- Access
 	item: G
 			-- `item' receiving `permission'.
 
+	human_readable_name: STRING
+			-- `human_readable_name' for the `item' and `uuid_string'.
+		deferred
+		end
+
 	client: CP_CLIENT
 			-- `client' of Current.
 
@@ -37,6 +44,8 @@ feature -- Basic Operations
 
 	set_new_client_level (a_level: INTEGER)
 			-- `set_new_client_level' changes `level' on `client' permission.
+		require
+			valid: ({CP_PERMISSION}.lowest_level |..| {CP_PERMISSION}.highest_level).has (a_level)
 		do
 			across
 				client.permissions as ic_perm

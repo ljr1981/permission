@@ -7,8 +7,13 @@ deferred class
 	CP_PERMISSION
 
 inherit
-	FW_UU_IDENTIFIED
+	CP_ANY
 		redefine
+			default_create
+		end
+
+	FW_UU_IDENTIFIED
+		undefine
 			default_create
 		end
 
@@ -110,11 +115,20 @@ feature -- Constants
 	add: INTEGER = 3
 	delete: INTEGER = 4
 
+	lowest_level: INTEGER = 0
+	highest_level: INTEGER = 4
+
 	Default_child_capacity: INTEGER = 100
 			-- `Default_child_capacity' of `children' of Current {CP_PERMISSION}.
 
 invariant
-	valid_level: (none |..| delete).has (level)
+	valid_level: (lowest_level |..| highest_level).has (level)
+	valid_lowest: lowest_level = none
+	valid_highest: highest_level = delete
+	valid_view: view = (none + view)
+	valid_edit: edit = (none + edit) and then view = (edit - view)
+	valid_add: add = (view + edit) and then none = (add - (edit + view))
+	valid_delete: delete = (view + add + none) and then delete = (delete - none)
 	mutex_enabled: is_disabled xor is_enabled
 	valid_uuid: uuid.is_valid_uuid (uuid_string)
 

@@ -1,6 +1,6 @@
 note
 	description: "[
-		Representation of a {MOCK_CARTOON_NAME_FIELD}.
+		Mock representation of a {MOCK_CARTOON_NAME_FIELD}.
 		]"
 
 class
@@ -44,6 +44,9 @@ feature -- Basic Operations
 feature -- Access
 
 	uuid_string: STRING = "553E9CF6-6732-402E-A2DE-4C3AA5A52F43"
+			-- <Precursor>
+
+	human_readable_name: STRING = "A mock cartoon name"
 			-- <Precursor>
 
 end

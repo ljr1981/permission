@@ -24,14 +24,15 @@ feature -- Access
 			Result.force (create {MOCK_BUGS})
 		end
 
-	permissions: ARRAYED_LIST [CP_PERMISSION]
+	permissions: HASH_TABLE [CP_PERMISSION, STRING]
 			-- <Precursor>
+		local
+			l_permission: MOCK_PERMISSION
 		attribute
 			create Result.make (Default_child_capacity)
-			Result.force (create {MOCK_PERMISSION})
+			create l_permission
+			Result.force (l_permission, l_permission.uuid_string)
 		end
-
-	uuid_string: STRING = "1710BEC4-D5B1-40F4-B8A8-E4DED450B87C"
 
 note
 	design: "[

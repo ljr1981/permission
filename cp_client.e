@@ -7,7 +7,7 @@ deferred class
 	CP_CLIENT
 
 inherit
-	FW_UU_IDENTIFIED
+	CP_ANY
 
 feature -- Access
 
@@ -22,7 +22,7 @@ feature -- Access
 			create Result.make (Default_child_capacity)
 		end
 
-	permissions: ARRAYED_LIST [CP_PERMISSION]
+	permissions: HASH_TABLE [CP_PERMISSION, STRING]
 			-- `permissions' given to Current {CP_CLIENT}.
 
 feature {NONE} -- Implementation
