@@ -8,6 +8,19 @@ deferred class
 
 inherit
 	FW_UU_IDENTIFIED
+		redefine
+			default_create
+		end
+
+feature {NONE} -- Initialization
+
+	default_create
+			-- <Precursor>
+		do
+			level := internal_level
+		ensure then
+			set: internal_level = level
+		end
 
 feature -- Access
 
@@ -84,6 +97,13 @@ feature -- Status Report
 
 feature -- Constants
 
+	internal_level: INTEGER
+			-- `internal_level' used by `default_create' to "seed" (initialize) `level'.
+			-- Do not redefine in ancestor if 0 is okay as a default level.
+		once
+			Result := 0
+		end
+
 	none: INTEGER = 0
 	view: INTEGER = 1
 	edit: INTEGER = 2
@@ -96,6 +116,7 @@ feature -- Constants
 invariant
 	valid_level: (none |..| delete).has (level)
 	mutex_enabled: is_disabled xor is_enabled
+	valid_uuid: uuid.is_valid_uuid (uuid_string)
 
 note
 	design: "[

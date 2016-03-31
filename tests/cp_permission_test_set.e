@@ -1,10 +1,7 @@
 note
 	description: "[
-		Eiffel tests that can be executed by testing tool.
+		Tests of {CP_PERMISSION} et al.
 	]"
-	author: "EiffelStudio test wizard"
-	date: "$Date$"
-	revision: "$Revision$"
 	testing: "type/manual"
 
 class
@@ -31,9 +28,9 @@ feature -- Test routines
 	cp_permission_creation_tests
 			-- `cp_permission_creation_tests'.
 		local
-			l_permission: CP_PERMISSION
+			l_permission: MOCK_PERMISSION
 		do
-			do_nothing -- yet ...
+			create l_permission
 		end
 
 end
