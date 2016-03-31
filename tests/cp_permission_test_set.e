@@ -8,7 +8,7 @@ note
 	testing: "type/manual"
 
 class
-	CP_ANY_TEST_SET
+	CP_PERMISSION_TEST_SET
 
 inherit
 	EQA_TEST_SET
@@ -28,12 +28,12 @@ inherit
 
 feature -- Test routines
 
-	cp_any_creation_tests
-			-- `cp_any_creation_tests'
+	cp_permission_creation_tests
+			-- `cp_permission_creation_tests'.
 		local
-			l_any: CP_ANY
+			l_permission: CP_PERMISSION
 		do
-			create l_any
+			create l_permission
 		end
 
 end

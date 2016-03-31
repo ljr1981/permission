@@ -5,10 +5,6 @@
 class
 	CP_ANY
 
-feature {NONE} -- Implementation
-
-
-
 note
 	steps: "[
 		(1) Client: Define/Create an Client
