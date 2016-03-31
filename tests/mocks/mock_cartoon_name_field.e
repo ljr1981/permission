@@ -46,7 +46,16 @@ feature -- Access
 	uuid_string: STRING = "553E9CF6-6732-402E-A2DE-4C3AA5A52F43"
 			-- <Precursor>
 
-	human_readable_name: STRING = "A mock cartoon name"
+	human_readable_name: STRING = "Mock cartoon name text field"
 			-- <Precursor>
 
+feature {NONE} -- Implementation
+
+	registry: MOCK_ITEM_REGISTRY
+			--  <Precursor>
+
+		once
+			create Result
+		end
+		
 end

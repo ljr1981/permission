@@ -40,6 +40,19 @@ feature -- Test routines
 				Note that in this case, the control is a single text field, where we do not have
 				complexities of any type of "list" with notions of "Add" and "Delete" (or Remove).
 				]"
+			testing:
+				"covers\{CP_CLIENT}.permissions",
+				"covers\{CP_PERMISSIONED_ITEM}.make_with_client",
+				"covers\{CP_PERMISSION}.apply_level_to_children",
+				"covers\{CP_PERMISSION}.Highest_level",
+				"covers\{CP_PERMISSION}.Lowest_level",
+				"covers\{CP_PERMISSION}.set_level",
+				"covers\{CP_PERMISSION}.uuid_string",
+				"covers\{CP_PERMISSIONED_ITEM}.client",
+				"covers\{CP_PERMISSIONED_ITEM}.default_create",
+				"covers\{CP_PERMISSIONED_ITEM}.set_item_permission",
+				"covers\{CP_PERMISSIONED_ITEM}.uuid",
+				"covers\{CP_PERMISSIONED_ITEM}.uuid_string"
 		local
 			l_control: MOCK_CARTOON_NAME_FIELD
 			l_client: MOCK_CHARACTERS
@@ -58,6 +71,40 @@ feature -- Test routines
 			l_control.unredact
 			assert_strings_equal ("redacted", "Cartoon Name", l_control.item.text)
 		end
+
+feature {NONE} -- Implementation
+
+	mock_permission: MOCK_PERMISSION
+			-- `mock_permission'.
+		do
+			create Result
+		end
+
+note
+	coverage: "[
+		Need to get coverage in on:
+		---------------------------
+		Add: INTEGER_32 = 3
+		apply_level_to_children
+		children: ARRAYED_LIST [CP_PERMISSION]
+		Default_child_capacity: INTEGER_32 = 100
+		Delete: INTEGER_32 = 4
+		downgrades_children: BOOLEAN
+		Edit: INTEGER_32 = 2
+		Highest_level: INTEGER_32 = 4
+		Internal_level: INTEGER_32
+		is_disabled: BOOLEAN
+		is_enabled: BOOLEAN
+		is_redacted: BOOLEAN
+		level: INTEGER_32
+		Lowest_level: INTEGER_32 = 0
+		None: INTEGER_32 = 0
+		set_level (a_level: [like level] INTEGER_32)
+		upgrades_children: BOOLEAN
+		Uuid: UUID
+		uuid_string: STRING_8
+		View: INTEGER_32 = 1
+		]"
 
 end
 

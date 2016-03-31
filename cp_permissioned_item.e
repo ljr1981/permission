@@ -9,6 +9,8 @@ deferred class
 inherit
 	CP_ANY
 
+	CP_REGISTRY_ITEM
+
 	FW_UU_IDENTIFIED
 
 feature {NONE} -- Initialization
@@ -57,6 +59,9 @@ feature -- Basic Operations
 				end
 			end
 		end
+
+invariant
+	registered: registry.items.has (uuid_string)
 
 ;note
 	design: "[
