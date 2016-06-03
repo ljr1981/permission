@@ -9,10 +9,10 @@
 		<setting name="console_application" value="true"/>
 		<setting name="concurrency" value="scoop"/>
 		<library name="base" location="$ISE_LIBRARY\library\base\base-safe.ecf"/>
-		<library name="framework" location="$GITHUB\Framework\framework.ecf"/>
+		<library name="framework" location="..\Framework\framework.ecf"/>
 		<library name="process" location="$ISE_LIBRARY\library\process\process-safe.ecf"/>
-		<library name="pub_sub" location="$GITHUB\pub_sub\pub_sub.ecf"/>
-		<library name="randomizer" location="$GITHUB\randomizer\randomizer.ecf"/>
+		<library name="pub_sub" location="..\pub_sub\pub_sub.ecf"/>
+		<library name="randomizer" location="..\randomizer\randomizer.ecf"/>
 		<library name="thread" location="$ISE_LIBRARY\library\thread\thread-safe.ecf"/>
 		<library name="time" location="$ISE_LIBRARY\library\time\time-safe.ecf"/>
 		<library name="uuid" location="$ISE_LIBRARY\library\uuid\uuid-safe.ecf"/>
@@ -40,7 +40,7 @@
 		<option profile="false">
 		</option>
 		<setting name="console_application" value="false"/>
-		<library name="test_extension" location="$GITHUB\test_extension\test_extension.ecf"/>
+		<library name="test_extension" location="..\test_extension\test_extension.ecf"/>
 		<library name="testing" location="$ISE_LIBRARY\library\testing\testing-safe.ecf"/>
 		<cluster name="tests" location=".\tests\" recursive="true"/>
 	</target>
