@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-15-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-15-0 http://www.eiffel.com/developers/xml/configuration-1-15-0.xsd" name="permission" uuid="19106802-20AF-4C72-A4C9-135F5247DB7A" library_target="permission">
+<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-18-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-18-0 http://www.eiffel.com/developers/xml/configuration-1-18-0.xsd" name="permission" uuid="19106802-20AF-4C72-A4C9-135F5247DB7A" library_target="permission">
 	<description>Applying permissions to Clients on Widgets</description>
 	<target name="permission">
 		<root all_classes="true"/>
-		<option warning="true" is_obsolete_routine_type="true" void_safety="transitional" syntax="provisional">
+		<option warning="true" is_obsolete_routine_type="true" syntax="provisional" manifest_array_type="mismatch_warning">
 			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
 		</option>
 		<setting name="console_application" value="true"/>
-		<setting name="concurrency" value="scoop"/>
+		<capability>
+			<concurrency support="scoop" use="thread"/>
+			<void_safety support="transitional" use="transitional"/>
+		</capability>
 		<library name="base" location="$ISE_LIBRARY\library\base\base-safe.ecf"/>
 		<library name="framework" location="..\Framework\framework.ecf"/>
 		<library name="process" location="$ISE_LIBRARY\library\process\process-safe.ecf"/>
@@ -39,6 +42,9 @@
 		<option profile="false">
 		</option>
 		<setting name="console_application" value="false"/>
+		<capability>
+			<concurrency support="scoop"/>
+		</capability>
 		<library name="test_extension" location="..\test_extension\test_extension.ecf"/>
 		<library name="testing" location="$ISE_LIBRARY\library\testing\testing-safe.ecf"/>
 		<cluster name="tests" location=".\tests\" recursive="true"/>
